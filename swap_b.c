@@ -12,3 +12,15 @@
 
 #include "push_swap.h"
 //#include <stdio.h>
+
+void	sb(t_stack *stack_b)
+{
+	int	temp;
+
+	if (!stack_b || stack_b->size < 2)
+		return ;
+	temp = stack_b->collection[0];
+	stack_b->collection[0] = stack_b->collection[1];
+	stack_b->collection[1] = temp;
+	write(1, "sb\n", 3);
+}

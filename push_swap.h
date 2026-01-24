@@ -28,8 +28,21 @@ typedef struct s_stack
 
 t_stack	*create_stack(int capacity);
 int		ft_atoi(const char *nptr);
+int		ft_printf(const char *format, ...);
 void	stack_add_bottom(t_stack *stack, int value);
-void	print_stack(t_stack *stack, char *name);
+void	print_stack(t_stack *stack_a, t_stack *stack_b);
 void	free_stack(t_stack *stack);
 t_stack	*parse_arguments(int argc, char **argv);
+void	copy_stack(t_stack *dest, t_stack *src);
+void	sa(t_stack *stack_a);
+void	sb(t_stack *stack_b);
+void	ss(t_stack *stack_a, t_stack *stack_b);
+void	pa(t_stack *stack_a, t_stack *stack_b);
+void	pb(t_stack *stack_a, t_stack *stack_b);
+void	ra(t_stack *stack_a);
+void	rb(t_stack *stack_b);
+void	rr(t_stack *stack_a, t_stack *stack_b);
+void	rra(t_stack *stack_a);
+void	rrb(t_stack *stack_b);
+void	rrr(t_stack *stack_a, t_stack *stack_b);
 #endif

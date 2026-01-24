@@ -12,3 +12,27 @@
 
 #include "push_swap.h"
 //#include <stdio.h>
+
+static void	reverse_rotate_stack(t_stack *stack)
+{
+	int	temp;
+	int	i;
+
+	temp = stack->collection[stack->size - 1];
+	i = stack->size - 1;
+	while (i > 0)
+	{
+		stack->collection[i] = stack->collection[i - 1];
+		i--;
+	}
+	stack->collection[0] = temp;
+}
+
+void	rrr(t_stack *stack_a, t_stack *stack_b)
+{
+	if (stack_a && stack_a->size >= 2)
+		reverse_rotate_stack(stack_a);
+	if (stack_b && stack_b->size >= 2)
+		reverse_rotate_stack(stack_b);
+	write(1, "rrr\n", 4);
+}

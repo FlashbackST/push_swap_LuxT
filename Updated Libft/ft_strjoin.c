@@ -13,33 +13,47 @@
 #include "libft.h"
 //#include <stdio.h>
 
-char	*ft_strjoin(char *s1, char *s2)
+static size_t	get_total_length(char *s1, char *s2)
 {
-	char	*res;
-	size_t	i;
-	size_t	j;
 	size_t	len1;
 	size_t	len2;
 
-	if (!s2)
-		return (NULL);
 	len1 = 0;
 	if (s1)
 		len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
-	res = malloc(len1 + len2 + 1);
-	if (!res)
-		return (NULL);
+	return (len1 + len2);
+}
+
+static void	copy_strings(char *res, char *s1, char *s2)
+{
+	size_t	i;
+	size_t	j;
+
 	i = 0;
-	j = 0;
 	while (s1 && s1[i])
 	{
 		res[i] = s1[i];
 		i++;
 	}
+	j = 0;
 	while (s2[j])
 		res[i++] = s2[j++];
 	res[i] = '\0';
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*res;
+	size_t	total_len;
+
+	if (!s2)
+		return (NULL);
+	total_len = get_total_length(s1, s2);
+	res = malloc(total_len + 1);
+	if (!res)
+		return (NULL);
+	copy_strings(res, s1, s2);
 	free(s1);
 	return (res);
 }

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 t_stack	*parse_arguments(int argc, char **argv)
 {
@@ -51,8 +50,30 @@ int	main(int argc, char **argv)
 		free_stack(stack_b);
 		return (1);
 	}
-	print_stack(stack_a, "Stack A");
-	print_stack(stack_b, "Stack B");
+	copy_stack(stack_b, stack_a);
+	print_stack(stack_a, stack_b);
+	sa(stack_a);
+	print_stack(stack_a, stack_b);
+	sb(stack_b);
+	print_stack(stack_a, stack_b);
+	ss(stack_a, stack_b);
+	print_stack(stack_a, stack_b);
+	pa(stack_a, stack_b);
+	print_stack(stack_a, stack_b);
+	pb(stack_a, stack_b);
+	print_stack(stack_a, stack_b);
+	ra(stack_a);
+	print_stack(stack_a, stack_b);
+	rb(stack_b);
+	print_stack(stack_a, stack_b);
+	rr(stack_a, stack_b);
+	print_stack(stack_a, stack_b);
+	rra(stack_a);
+	print_stack(stack_a, stack_b);
+	rrb(stack_b);
+	print_stack(stack_a, stack_b);
+	rrr(stack_a, stack_b);
+	print_stack(stack_a, stack_b);
 	free_stack(stack_a);
 	free_stack(stack_b);
 	return (0);

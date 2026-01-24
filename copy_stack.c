@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate_a+b.c                                       :+:      :+:    :+:   */
+/*   copy_stack.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sthinnes <sthinnes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/23 14:09:51 by sthinnes          #+#    #+#             */
-/*   Updated: 2026/01/23 14:10:02 by sthinnes         ###   ########.fr       */
+/*   Created: 2026/01/24 13:22:35 by sthinnes          #+#    #+#             */
+/*   Updated: 2026/01/24 13:22:43 by sthinnes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 //#include <stdio.h>
 
-static void	rotate_stack(t_stack *stack)
+void	copy_stack(t_stack *dest, t_stack *src)
 {
-	int	temp;
 	int	i;
 
-	temp = stack->collection[0];
+	if (!dest || !src)
+		return ;
 	i = 0;
-	while (i < stack->size - 1)
+	while (i < src->size)
 	{
-		stack->collection[i] = stack->collection[i + 1];
+		dest->collection[i] = src->collection[i];
 		i++;
 	}
-	stack->collection[stack->size - 1] = temp;
-}
-
-void	rr(t_stack *stack_a, t_stack *stack_b)
-{
-	if (stack_a && stack_a->size >= 2)
-		rotate_stack(stack_a);
-	if (stack_b && stack_b->size >= 2)
-		rotate_stack(stack_b);
-	write(1, "rr\n", 3);
+	dest->size = src->size;
 }

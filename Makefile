@@ -1,22 +1,31 @@
-NAME	= libftprintf.a
+.PHONY: all clean fclean re libft
+
+NAME	= push_swap
 CC	= cc
 CFLAGS	= -Wall -Wextra -Werror -I.
-SRCS	= ft_putchar.c ft_putstr.c ft_putnbr.c ft_putunsignednbr.c ft_atoi.c ft_puthex_lower.c ft_puthex_upper.c ft_putptr.c ft_printf.c
+LIBFT_DIR = ./Updated\ Libft
+LIBFT	= $(LIBFT_DIR)/libft.a
+SRCS	= stack_add_bottom.c create_stack.c parse_arguments.c free_stack.c print_stack.c copy_stack.c swap_a.c swap_b.c swap_a+b.c push_a.c push_b.c rotate_a.c rotate_b.c rotate_a+b.c reverse_rotate_a.c reverse_rotate_b.c reverse_rotate_a+b.c
 OBJS	= $(SRCS:.c=.o)
 
-all: $(NAME)
 
-$(NAME): $(OBJS)
-	ar rc $(NAME) $(OBJS)
-	ranlib $(NAME)
+all: libft $(NAME)
 
-%.o: %.c ft_printf.h
-	$(CC) $(CFLAGS) -c $< -o $@
+libft:
+	$(MAKE) -C $(LIBFT_DIR)
+
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+
+%.o: %.c push_swap.h
+	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
+	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
