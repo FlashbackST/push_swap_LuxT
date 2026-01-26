@@ -48,6 +48,8 @@ int	main(int argc, char **argv)
 		return (0);
 	init_flags(&flags);
 	parse_flags(argc, argv, &flags);
+	if (error_output(argc, argv))
+		return (1);
 	num_count = count_numbers(argc, argv);
 	if (num_count == 0)
 		return (0);
@@ -59,6 +61,15 @@ int	main(int argc, char **argv)
 		free_stack(stack_b);
 		return (1);
 	}
+	if (check_for_duplicates(stack_a))
+	{
+		write(2, "Error\n", 6);
+		free_stack(stack_a);
+		free_stack(stack_b);
+		return (1);
+	}
+	stack_a->disorder = compute_disorder(stack_a->collection, stack_a->size);
+	print_disorder(stack_a->disorder);
 	if (flags.simple)
 	{
 		print_stack(stack_a, stack_b);

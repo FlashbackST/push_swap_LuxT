@@ -13,6 +13,9 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+# define INT_MAX 2147483647
+# define INT_MIN -2147483648
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
@@ -22,9 +25,10 @@
 
 typedef struct s_stack
 {
-	int	*collection;
-	int	capacity;
-	int	size;
+	int		*collection;
+	int		capacity;
+	int		size;
+	double	disorder;
 }	t_stack;
 
 t_stack	*create_stack(int capacity);
@@ -54,5 +58,11 @@ void	rotate_to_min(t_stack *stack_a, int min_pos, t_flags *flags);
 void	handle_bigger_case(t_stack *stack_a, t_stack *stack_b, t_flags *flags);
 void	handle_smaller_case(t_stack *stack_a, t_stack *stack_b, t_flags *flags);
 void	selection_sort(t_stack *stack_a, t_stack *stack_b, t_flags *flags);
+int		check_for_duplicates(t_stack *stack_a);
+int		check_if_numbers(int argc, char **argv);
+int		check_if_outside_valid_range(int argc, char **argv);
+int		error_output(int argc, char **argv);
+double	compute_disorder(int *stack_a, int size);
+void	print_disorder(double disorder);
 int		main(int argc, char **argv);
 #endif

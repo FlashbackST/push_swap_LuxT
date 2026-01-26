@@ -35,7 +35,7 @@ static int	find_insert_position(t_stack *stack_a, int value)
 		i++;
 	}
 	if (best_diff == 2147483647)
-		return (find_min_position(stack_a));
+		return (find_max_position(stack_a) + 1);
 	return (best_pos);
 }
 
@@ -68,6 +68,7 @@ void	insertion_sort(t_stack *stack_a, t_stack *stack_b, t_flags *flags)
 {
 	int	insert_pos;
 	int	value;
+	int	min_pos;
 
 	if (!stack_a || stack_a->size <= 1)
 		return ;
@@ -84,4 +85,6 @@ void	insertion_sort(t_stack *stack_a, t_stack *stack_b, t_flags *flags)
 		pa(stack_a, stack_b);
 		print_verbose(flags, "pa\n");
 	}
+	min_pos = find_min_position(stack_a);
+	rotate_to_position(stack_a, min_pos, flags);
 }
