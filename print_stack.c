@@ -53,5 +53,5 @@ void	print_stack(t_stack *stack_a, t_stack *stack_b)
 		print_stack_row(stack_a, stack_b, i);
 		i++;
 	}
-	ft_printf("\n- -\na b\n");
+	ft_printf("- -\na b\n");
 }

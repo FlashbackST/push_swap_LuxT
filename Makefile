@@ -5,7 +5,7 @@ CC	= cc
 CFLAGS	= -Wall -Wextra -Werror -I.
 LIBFT_DIR = ./Updated\ Libft
 LIBFT	= $(LIBFT_DIR)/libft.a
-SRCS	= stack_add_bottom.c create_stack.c parse_arguments.c free_stack.c print_stack.c copy_stack.c swap_a.c swap_b.c swap_a+b.c push_a.c push_b.c rotate_a.c rotate_b.c rotate_a+b.c reverse_rotate_a.c reverse_rotate_b.c reverse_rotate_a+b.c
+SRCS	= stack_add_bottom.c create_stack.c parse_arguments.c free_stack.c print_stack.c copy_stack.c swap_a.c swap_b.c swap_a+b.c push_a.c push_b.c rotate_a.c rotate_b.c rotate_a+b.c reverse_rotate_a.c reverse_rotate_b.c reverse_rotate_a+b.c simple_algorithm_insertionsort_utils.c simple_algorithm_selectionsort_utils.c simple_algorithm_selectionsort.c simple_algorithm_insertionsort.c flags.c main.c
 OBJS	= $(SRCS:.c=.o)
 
 

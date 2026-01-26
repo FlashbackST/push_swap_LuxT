@@ -18,6 +18,7 @@
 # include <string.h>
 # include <stddef.h>
 # include <stdarg.h>
+# include "flags.h"
 
 typedef struct s_stack
 {
@@ -45,4 +46,13 @@ void	rr(t_stack *stack_a, t_stack *stack_b);
 void	rra(t_stack *stack_a);
 void	rrb(t_stack *stack_b);
 void	rrr(t_stack *stack_a, t_stack *stack_b);
+int		find_max_position(t_stack *stack);
+void	insertion_sort(t_stack *stack_a, t_stack *stack_b, t_flags *flags);
+void	print_verbose(t_flags *flags, char *msg);
+int		find_min_position(t_stack *stack);
+void	rotate_to_min(t_stack *stack_a, int min_pos, t_flags *flags);
+void	handle_bigger_case(t_stack *stack_a, t_stack *stack_b, t_flags *flags);
+void	handle_smaller_case(t_stack *stack_a, t_stack *stack_b, t_flags *flags);
+void	selection_sort(t_stack *stack_a, t_stack *stack_b, t_flags *flags);
+int		main(int argc, char **argv);
 #endif
