@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "benchmark.h"
 //#include <stdio.h>
 
-void	sb(t_stack *stack_b)
+void	sb(t_stack *stack_b, t_benchmark *bench)
 {
 	int	temp;
 
@@ -22,5 +23,8 @@ void	sb(t_stack *stack_b)
 	temp = stack_b->collection[0];
 	stack_b->collection[0] = stack_b->collection[1];
 	stack_b->collection[1] = temp;
-	write(1, "sb\n", 3);
+	if (!bench || !bench->enabled)
+		write(1, "sb\n", 3);
+	if (bench)
+		benchmark_record_op(bench, "sb");
 }

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "benchmark.h"
 //#include <stdio.h>
 
 static void	rotate_stack(t_stack *stack)
@@ -28,11 +29,14 @@ static void	rotate_stack(t_stack *stack)
 	stack->collection[stack->size - 1] = temp;
 }
 
-void	rr(t_stack *stack_a, t_stack *stack_b)
+void	rr(t_stack *stack_a, t_stack *stack_b, t_benchmark *bench)
 {
 	if (stack_a && stack_a->size >= 2)
 		rotate_stack(stack_a);
 	if (stack_b && stack_b->size >= 2)
 		rotate_stack(stack_b);
-	write(1, "rr\n", 3);
+	if (!bench || !bench->enabled)
+		write(1, "rr\n", 3);
+	if (bench)
+		benchmark_record_op(bench, "rr");
 }

@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "benchmark.h"
 //#include <stdio.h>
 
-void	rra(t_stack *stack_a)
+void	rra(t_stack *stack_a, t_benchmark *bench)
 {
 	int	temp;
 	int	i;
@@ -28,5 +29,8 @@ void	rra(t_stack *stack_a)
 		i--;
 	}
 	stack_a->collection[0] = temp;
-	write(1, "rra\n", 4);
+	if (!bench || !bench->enabled)
+		write(1, "rra\n", 4);
+	if (bench)
+		benchmark_record_op(bench, "rra");
 }

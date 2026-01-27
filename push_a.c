@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "benchmark.h"
 //#include <stdio.h>
 
-void	pa(t_stack *stack_a, t_stack *stack_b)
+void	pa(t_stack *stack_a, t_stack *stack_b, t_benchmark *bench)
 {
 	int	i;
 
@@ -34,5 +35,8 @@ void	pa(t_stack *stack_a, t_stack *stack_b)
 		i++;
 	}
 	stack_b->size--;
-	write(1, "pa\n", 3);
+	if (!bench || !bench->enabled)
+		write(1, "pa\n", 3);
+	if (bench)
+		benchmark_record_op(bench, "pa");
 }

@@ -12,31 +12,6 @@
 
 #include "push_swap.h"
 
-static int	is_flag(char *arg)
-{
-	if (!arg)
-		return (0);
-	if (arg[0] == '-' && arg[1] == '-')
-		return (1);
-	return (0);
-}
-
-static int	count_numbers(int argc, char **argv)
-{
-	int	count;
-	int	i;
-
-	count = 0;
-	i = 1;
-	while (i < argc)
-	{
-		if (!is_flag(argv[i]))
-			count++;
-		i++;
-	}
-	return (count);
-}
-
 t_stack	*parse_arguments(int argc, char **argv)
 {
 	t_stack	*stack;

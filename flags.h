@@ -21,6 +21,7 @@ typedef struct s_flags
 	int	simple;
 	int	verbose;
 	int	debug;
+	int	bench;
 }	t_flags;
 
 void	init_flags(t_flags *flags);

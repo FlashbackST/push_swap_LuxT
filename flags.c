@@ -12,6 +12,8 @@
 
 #include "flags.h"
 
+int	is_flag(char *arg);
+
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
@@ -31,6 +33,7 @@ void	init_flags(t_flags *flags)
 	flags->simple = 0;
 	flags->verbose = 0;
 	flags->debug = 0;
+	flags->bench = 0;
 }
 
 void	parse_flags(int argc, char **argv, t_flags *flags)
@@ -40,7 +43,7 @@ void	parse_flags(int argc, char **argv, t_flags *flags)
 	if (!flags || !argv)
 		return ;
 	i = 1;
-	while (i < argc)
+	while (i < argc && is_flag(argv[i]))
 	{
 		if (ft_strcmp(argv[i], "--simple") == 0)
 			flags->simple = 1;
@@ -48,6 +51,8 @@ void	parse_flags(int argc, char **argv, t_flags *flags)
 			flags->verbose = 1;
 		else if (ft_strcmp(argv[i], "--debug") == 0)
 			flags->debug = 1;
+		else if (ft_strcmp(argv[i], "--bench") == 0)
+			flags->bench = 1;
 		i++;
 	}
 }
