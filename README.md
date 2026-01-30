@@ -1,6 +1,6 @@
-# ft_printf
+# push_swap
 
-*This project has been created as part of the 42 curriculum by <sthinnes>.*
+*This project has been created as part of the 42 curriculum by <sthinnes> and <dgarot>.*
 
 ---
 
@@ -167,18 +167,63 @@ cc -Wall -Wextra -Werror ft_test.c libftprintf.a -o {customized name of the comp
 
 ### General Resources
 
-- AI assistant app **Claude.ai** for the explanation of the original function "printf" and for the creation of the main function in my "test.c"
-
-- Website **Wikipedia** for the explanation of the original function "printf"
+- AI assistant app **Claude.ai** for the explanation of some parts of the project "push_swap"
 
 ### Specific Research
 
-**For explanation of variadic functions:**
+**For explanation of the key principle and the composition of the project “push_swap”:**
 
-- https://www.youtube.com/watch?v=oDC208zvsdg
+- https://42-cursus.gitbook.io/guide/2-rank-02/push_swap
+- https://github.com/OliverKingz/push_swap
+- https://www.youtube.com/watch?v=OaG81sDEpVk
 
-**For explanation of %p:**
+**For explanation of stack implementation:**
 
-- https://stackoverflow.com/questions/2369541/where-is-p-useful-with-printf
+- https://www.youtube.com/watch?v=Flk5yrlx5Qo
+
+**For explanation of the different operations (sa, sb, ss, pa, pb, ra, rb, rr, rra, rrb, rrr):**
+
+- https://www.youtube.com/watch?v=4dMsuxfqufg
+
+**For explanation of the Phony implementation in a Makefile:**
+
+- https://www.youtube.com/watch?v=GO0MHokQn-E
+
+**For explanation of all types of sorting algorithms:**
+
+- https://www.youtube.com/watch?v=rbbTd-gkajw
+
+**For explanation of simple sorting algorithms:**
+
+- https://www.eecs.umich.edu/courses/eecs281/f04/lecnotes/10-elementary%20sorting.pdf
+- https://www.geeksforgeeks.org/dsa/comparison-among-bubble-sort-selection-sort-and-insertion-sort/
+
+**→ For insertion sort:**
+
+- https://www.youtube.com/watch?v=JU767SDMDvA
+- https://www.youtube.com/watch?v=nKzEJWbkPbQ
+
+**→ For selection sort:**
+
+- https://www.youtube.com/watch?v=EwjnF7rFLns
+
+**→ For bubble sort:**
+
+- https://www.youtube.com/watch?v=p__ETf2CKY4
+
+**For explanation of medium  sorting algorithms:**
+
+**→ For block-based sorting:**
+
+- https://www.youtube.com/watch?v=InGeRuRk3f8
+
+**→ For bucket sort:**
+
+- https://www.youtube.com/watch?v=xeT31rm3bN0
+- https://www.geeksforgeeks.org/dsa/bucket-sort-2/
+
+**For explanation of benchmark mode:**
+
+- https://en.wikipedia.org/wiki/Benchmark_(computing)
 
 

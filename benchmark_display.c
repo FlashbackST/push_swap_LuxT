@@ -12,64 +12,41 @@
 
 #include "benchmark.h"
 
-static void	display_header(t_benchmark *bench)
+static void	print_op(const char *name, int count)
 {
-	write(2, "\n=== BENCHMARK RESULTS ===\n", 28);
-	write(2, "Initial disorder: ", 18);
-	put_double_fd(bench->disorder, 2);
-	write(2, "%\n", 2);
-	if (bench->strategy_name)
-	{
-		write(2, "Strategy: ", 10);
-		write(2, bench->strategy_name, ft_strlen_bench(bench->strategy_name));
-		write(2, "\n", 1);
-	}
-	if (bench->complexity_class)
-	{
-		write(2, "Complexity: ", 12);
-		write(2, bench->complexity_class,
-			ft_strlen_bench(bench->complexity_class));
-		write(2, "\n", 1);
-	}
-	write(2, "Total operations: ", 18);
-	put_nbr_fd(bench->ops.total, 2);
-	write(2, "\n\nOperation breakdown:\n", 23);
+	write(2, name, ft_strlen_bench(name));
+	write(2, ":  ", 3);
+	put_nbr_fd(count, 2);
 }
 
-static void	display_swap_ops(t_op_counts *ops)
+static void	print_swap_push_ops(t_op_counts *ops)
 {
-	write(2, "  sa:  ", 7);
-	put_nbr_fd(ops->sa, 2);
-	write(2, "\n  sb:  ", 8);
-	put_nbr_fd(ops->sb, 2);
-	write(2, "\n  ss:  ", 8);
-	put_nbr_fd(ops->ss, 2);
-	write(2, "\n", 1);
+	write(2, "\n[bench]    ", 12);
+	print_op("sa", ops->sa);
+	write(2, "    ", 4);
+	print_op("sb", ops->sb);
+	write(2, "    ", 4);
+	print_op("ss", ops->ss);
+	write(2, "    ", 4);
+	print_op("pa", ops->pa);
+	write(2, "    ", 4);
+	print_op("pb", ops->pb);
 }
 
-static void	display_push_ops(t_op_counts *ops)
+static void	print_rotate_ops(t_op_counts *ops)
 {
-	write(2, "  pa:  ", 7);
-	put_nbr_fd(ops->pa, 2);
-	write(2, "\n  pb:  ", 8);
-	put_nbr_fd(ops->pb, 2);
-	write(2, "\n", 1);
-}
-
-static void	display_rotate_ops(t_op_counts *ops)
-{
-	write(2, "  ra:  ", 7);
-	put_nbr_fd(ops->ra, 2);
-	write(2, "\n  rb:  ", 8);
-	put_nbr_fd(ops->rb, 2);
-	write(2, "\n  rr:  ", 8);
-	put_nbr_fd(ops->rr, 2);
-	write(2, "\n  rra: ", 8);
-	put_nbr_fd(ops->rra, 2);
-	write(2, "\n  rrb: ", 8);
-	put_nbr_fd(ops->rrb, 2);
-	write(2, "\n  rrr: ", 8);
-	put_nbr_fd(ops->rrr, 2);
+	write(2, "\n[bench]    ", 12);
+	print_op("ra", ops->ra);
+	write(2, "    ", 4);
+	print_op("rb", ops->rb);
+	write(2, "    ", 4);
+	print_op("rr", ops->rr);
+	write(2, "    ", 4);
+	print_op("rra", ops->rra);
+	write(2, "    ", 4);
+	print_op("rrb", ops->rrb);
+	write(2, "    ", 4);
+	print_op("rrr", ops->rrr);
 	write(2, "\n", 1);
 }
 
@@ -77,9 +54,20 @@ void	benchmark_display(t_benchmark *bench)
 {
 	if (!bench || !bench->enabled)
 		return ;
-	display_header(bench);
-	display_swap_ops(&bench->ops);
-	display_push_ops(&bench->ops);
-	display_rotate_ops(&bench->ops);
-	write(2, "========================\n", 25);
+	write(2, "\n[bench] disorder: ", 18);
+	put_double_fd(bench->disorder * 100, 2);
+	write(2, "%\n", 2);
+	if (bench->strategy_name && bench->complexity_class)
+	{
+		write(2, "[bench] strategy: ", 18);
+		write(2, bench->strategy_name, ft_strlen_bench(bench->strategy_name));
+		write(2, " / ", 3);
+		write(2, bench->complexity_class,
+			ft_strlen_bench(bench->complexity_class));
+		write(2, "\n", 1);
+	}
+	write(2, "[bench] total_ops: ", 19);
+	put_nbr_fd(bench->ops.total, 2);
+	print_swap_push_ops(&bench->ops);
+	print_rotate_ops(&bench->ops);
 }

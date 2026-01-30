@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flags.h                                            :+:      :+:    :+:   */
+/*   if_stack_is_sorted.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sthinnes <sthinnes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/22 22:26:13 by sthinnes          #+#    #+#             */
-/*   Updated: 2026/01/22 22:26:17 by sthinnes         ###   ########.fr       */
+/*   Created: 2026/01/29 15:53:21 by sthinnes          #+#    #+#             */
+/*   Updated: 2026/01/29 15:53:25 by sthinnes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FLAGS_H
-# define FLAGS_H
+#include "push_swap.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-
-typedef struct s_flags
+int	is_sorted(t_stack *stack)
 {
-	int	simple;
-	int	medium;
-	int	verbose;
-	int	debug;
-	int	bench;
-	int	simple_order;
-	int	medium_order;
-}	t_flags;
+	int	i;
 
-void	init_flags(t_flags *flags);
-void	parse_flags(int argc, char **argv, t_flags *flags);
-int		ft_strcmp(const char *s1, const char *s2);
-#endif
+	if (!stack || stack->size <= 1)
+		return (1);
+	i = 0;
+	while (i < stack->size - 1)
+	{
+		if (stack->collection[i] > stack->collection[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}

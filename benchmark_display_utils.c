@@ -41,10 +41,13 @@ void	put_double_fd(double n, int fd)
 	integer_part = (int)n;
 	decimal_part = (int)((n - integer_part) * 100);
 	put_nbr_fd(integer_part, fd);
-	write(fd, ".", 1);
-	if (decimal_part < 10)
-		write(fd, "0", 1);
-	put_nbr_fd(decimal_part, fd);
+	if (decimal_part != 0)
+	{
+		write(fd, ".", 1);
+		if (decimal_part < 10)
+			write(fd, "0", 1);
+		put_nbr_fd(decimal_part, fd);
+	}
 }
 
 int	ft_strlen_bench(const char *s)

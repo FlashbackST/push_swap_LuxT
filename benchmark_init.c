@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "benchmark.h"
+#include "push_swap.h"
 
 static void	init_op_counts(t_op_counts *ops)
 {
@@ -47,16 +48,29 @@ void	benchmark_set_strategy(t_benchmark *bench, int stack_size)
 	if (stack_size <= 3)
 	{
 		bench->strategy_name = "Simple sort";
-		bench->complexity_class = "O(1)";
+		bench->complexity_class = "O(n^2)";
 	}
 	else if (stack_size <= 5)
 	{
-		bench->strategy_name = "Selection sort";
+		bench->strategy_name = "Simple (Selection sort)";
 		bench->complexity_class = "O(n^2)";
 	}
 	else
 	{
-		bench->strategy_name = "Insertion sort";
+		bench->strategy_name = "Simple (Insertion sort)";
 		bench->complexity_class = "O(n^2)";
 	}
+}
+
+void	make_benchmark(t_benchmark *bench, t_stack *stack_a, t_flags *flags)
+{
+	benchmark_init(bench, flags->bench);
+	benchmark_set_disorder(bench, stack_a->disorder);
+	if (flags->medium)
+	{
+		bench->strategy_name = "Medium (Bucket sort)";
+		bench->complexity_class = "O(n√n)";
+	}
+	else
+		benchmark_set_strategy(bench, stack_a->size);
 }

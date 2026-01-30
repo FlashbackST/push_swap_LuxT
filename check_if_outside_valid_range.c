@@ -40,21 +40,35 @@ static long	ft_strtol(const char *str, char **endptr)
 	return (result * sign);
 }
 
-int	check_if_outside_valid_range(int argc, char **argv)
+static int	check_number_range(char *str)
 {
-	int		i;
 	long	num;
 	char	*endptr;
+	char	*ptr;
+
+	ptr = str;
+	while (*ptr)
+	{
+		num = ft_strtol(ptr, &endptr);
+		if (ptr == endptr)
+			break ;
+		if (num < INT_MIN || num > INT_MAX)
+			return (1);
+		ptr = endptr;
+	}
+	return (0);
+}
+
+int	check_if_outside_valid_range(int argc, char **argv)
+{
+	int	i;
 
 	i = 1;
 	while (i < argc)
 	{
 		if (!(argv[i][0] == '-' && argv[i][1] == '-'))
 		{
-			num = ft_strtol(argv[i], &endptr);
-			if (*endptr != '\0')
-				return (1);
-			if (num < INT_MIN || num > INT_MAX)
+			if (check_number_range(argv[i]))
 				return (1);
 		}
 		i++;

@@ -41,6 +41,9 @@ typedef struct s_benchmark
 	t_op_counts		ops;
 }	t_benchmark;
 
+typedef struct s_stack	t_stack;
+typedef struct s_flags	t_flags;
+
 void	benchmark_init(t_benchmark *bench, int enabled);
 void	benchmark_set_disorder(t_benchmark *bench, double disorder);
 void	benchmark_set_strategy(t_benchmark *bench, int stack_size);
@@ -49,4 +52,5 @@ void	benchmark_display(t_benchmark *bench);
 void	put_nbr_fd(int n, int fd);
 void	put_double_fd(double n, int fd);
 int		ft_strlen_bench(const char *s);
+void	make_benchmark(t_benchmark *bench, t_stack *stack_a, t_flags *flags);
 #endif

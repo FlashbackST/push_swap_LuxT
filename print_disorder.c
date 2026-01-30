@@ -19,13 +19,9 @@ void	print_disorder(double disorder)
 	int	decimal;
 
 	whole = (int)disorder;
-	decimal = (int)((disorder - whole) * 10000);
+	decimal = (int)((disorder - whole) * 100);
 	ft_printf("Initial disorder: %d.", whole);
-	if (decimal < 1000)
-		ft_printf("0");
-	if (decimal < 100)
-		ft_printf("0");
 	if (decimal < 10)
 		ft_printf("0");
-	ft_printf("%d\n", decimal);
+	ft_printf("%d\n\n", decimal);
 }

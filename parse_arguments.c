@@ -16,7 +16,6 @@ t_stack	*parse_arguments(int argc, char **argv)
 {
 	t_stack	*stack;
 	int		i;
-	int		num;
 	int		num_count;
 
 	num_count = count_numbers(argc, argv);
@@ -27,10 +26,7 @@ t_stack	*parse_arguments(int argc, char **argv)
 	while (i < argc)
 	{
 		if (!is_flag(argv[i]))
-		{
-			num = ft_atoi(argv[i]);
-			stack_add_bottom(stack, num);
-		}
+			process_argument(argv[i], stack);
 		i++;
 	}
 	return (stack);

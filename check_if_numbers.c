@@ -13,27 +13,55 @@
 #include "push_swap.h"
 //#include <stdio.h>
 
+static int	check_single_number(char *str, int *j)
+{
+	if (str[*j] == '-' || str[*j] == '+')
+		(*j)++;
+	if (!str[*j] || str[*j] == ' ' || str[*j] == '\t')
+		return (1);
+	while (str[*j] && str[*j] != ' ' && str[*j] != '\t')
+	{
+		if (str[*j] < '0' || str[*j] > '9')
+			return (1);
+		(*j)++;
+	}
+	return (0);
+}
+
+static int	validate_argument(char *arg)
+{
+	int	j;
+	int	has_number;
+
+	j = 0;
+	has_number = 0;
+	while (arg[j])
+	{
+		while (arg[j] == ' ' || arg[j] == '\t')
+			j++;
+		if (arg[j])
+		{
+			if (check_single_number(arg, &j))
+				return (1);
+			has_number = 1;
+		}
+	}
+	if (!has_number)
+		return (1);
+	return (0);
+}
+
 int	check_if_numbers(int argc, char **argv)
 {
 	int	i;
-	int	j;
 
 	i = 1;
 	while (i < argc)
 	{
 		if (!(argv[i][0] == '-' && argv[i][1] == '-'))
 		{
-			j = 0;
-			if (argv[i][j] == '-' || argv[i][j] == '+')
-				j++;
-			if (!argv[i][j])
+			if (validate_argument(argv[i]))
 				return (1);
-			while (argv[i][j])
-			{
-				if (argv[i][j] < '0' || argv[i][j] > '9')
-					return (1);
-				j++;
-			}
 		}
 		i++;
 	}

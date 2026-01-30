@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_utils.c                                       :+:      :+:    :+:   */
+/*   main_utils1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sthinnes <sthinnes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -22,6 +22,32 @@ int	is_flag(char *arg)
 	return (0);
 }
 
+static int	count_words_in_string(char *str)
+{
+	int	count;
+	int	in_word;
+	int	i;
+
+	count = 0;
+	in_word = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ' && str[i] != '\t')
+		{
+			if (!in_word)
+			{
+				count++;
+				in_word = 1;
+			}
+		}
+		else
+			in_word = 0;
+		i++;
+	}
+	return (count);
+}
+
 int	count_numbers(int argc, char **argv)
 {
 	int	count;
@@ -32,20 +58,10 @@ int	count_numbers(int argc, char **argv)
 	while (i < argc)
 	{
 		if (!is_flag(argv[i]))
-			count++;
+			count += count_words_in_string(argv[i]);
 		i++;
 	}
 	return (count);
-}
-
-void	init_benchmark(t_benchmark *bench, t_stack *stack_a, t_flags *flags)
-{
-	benchmark_init(bench, flags->bench);
-	if (flags->bench)
-	{
-		benchmark_set_disorder(bench, stack_a->disorder);
-		benchmark_set_strategy(bench, stack_a->size);
-	}
 }
 
 int	handle_errors(int argc, char **argv, int num_count)

@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 #include "benchmark.h"
-//include <stdio.h>
 
 static int	find_insert_position(t_stack *stack_a, int value)
 {
@@ -45,13 +44,13 @@ static void	rotate_to_position(t_stack *stack_a, int pos, t_flags *flags,
 {
 	int	size;
 
+	(void)flags;
 	size = stack_a->size;
 	if (pos <= size / 2)
 	{
 		while (pos > 0)
 		{
 			ra(stack_a, bench);
-			print_verbose(flags, "ra\n");
 			pos--;
 		}
 	}
@@ -60,7 +59,6 @@ static void	rotate_to_position(t_stack *stack_a, int pos, t_flags *flags,
 		while (pos < size)
 		{
 			rra(stack_a, bench);
-			print_verbose(flags, "rra\n");
 			pos++;
 		}
 	}
@@ -73,20 +71,17 @@ void	insertion_sort(t_stack *stack_a, t_stack *stack_b, t_flags *flags,
 	int	value;
 	int	min_pos;
 
-	if (!stack_a || stack_a->size <= 1)
+	(void)flags;
+	if (!stack_a || stack_a->size <= 1 || is_sorted(stack_a))
 		return ;
 	while (stack_a->size > 0)
-	{
 		pb(stack_a, stack_b, bench);
-		print_verbose(flags, "pb\n");
-	}
 	while (stack_b->size > 0)
 	{
 		value = stack_b->collection[0];
 		insert_pos = find_insert_position(stack_a, value);
 		rotate_to_position(stack_a, insert_pos, flags, bench);
 		pa(stack_a, stack_b, bench);
-		print_verbose(flags, "pa\n");
 	}
 	min_pos = find_min_position(stack_a);
 	rotate_to_position(stack_a, min_pos, flags, bench);

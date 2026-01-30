@@ -1,36 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simple_algorithm_selectionsort.c                   :+:      :+:    :+:   */
+/*   medium_algorithm_bucketsort.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sthinnes <sthinnes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/26 08:37:59 by sthinnes          #+#    #+#             */
-/*   Updated: 2026/01/26 08:38:12 by sthinnes         ###   ########.fr       */
+/*   Created: 2026/01/27 16:57:57 by sthinnes          #+#    #+#             */
+/*   Updated: 2026/01/27 16:58:00 by sthinnes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "benchmark.h"
-//include <stdio.h>
+#include <math.h>
 
-void	selection_sort(t_stack *stack_a, t_stack *stack_b, t_flags *flags,
-				t_benchmark *bench)
+void	push_all_to_b(t_stack *stack_a, t_stack *stack_b,
+				t_flags *flags, t_benchmark *bench)
 {
-	int	min_pos;
-
-	if (!stack_a || stack_a->size <= 1 || is_sorted(stack_a))
-		return ;
 	while (stack_a->size > 0)
 	{
-		min_pos = find_min_position(stack_a);
-		rotate_to_min(stack_a, min_pos, flags, bench);
 		pb(stack_a, stack_b, bench);
 		print_verbose(flags, "pb\n");
 	}
-	while (stack_b->size > 0)
+}
+
+int	find_in_bucket(t_stack *stack, int bucket, int min, int range)
+{
+	int	i;
+	int	elem_bucket;
+
+	i = 0;
+	while (i < stack->size)
 	{
-		pa(stack_a, stack_b, bench);
-		print_verbose(flags, "pa\n");
+		if (range == 0)
+			elem_bucket = 0;
+		else
+		{
+			elem_bucket = (stack->collection[i] - min) / (range / 2 + 1);
+			if (elem_bucket >= 2)
+				elem_bucket = 1;
+		}
+		if (elem_bucket == bucket)
+			return (i);
+		i++;
 	}
+	return (-1);
 }
