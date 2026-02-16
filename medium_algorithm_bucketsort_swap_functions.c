@@ -38,16 +38,13 @@ void	optimize_with_swap(t_stack *stack_a, t_stack *stack_b,
 	if (swap_a && swap_b)
 	{
 		ss(stack_a, stack_b, ctx->bench);
-		print_verbose(ctx->flags, "ss\n");
 	}
 	else if (swap_a)
 	{
 		sa(stack_a, ctx->bench);
-		print_verbose(ctx->flags, "sa\n");
 	}
 	else if (swap_b)
 	{
 		sb(stack_b, ctx->bench);
-		print_verbose(ctx->flags, "sb\n");
 	}
 }

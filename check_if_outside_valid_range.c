@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-//#include <stdio.h>
 
 static long	ft_strtol(const char *str, char **endptr)
 {

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-//#include <stdio.h>
 
 void	print_disorder(double disorder)
 {

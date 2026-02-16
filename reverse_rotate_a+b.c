@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 #include "benchmark.h"
-//#include <stdio.h>
 
 static void	reverse_rotate_stack(t_stack *stack)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sventhinnes <sventhinnes@student.42.fr>    +#+  +:+       +#+        */
+/*   By: sthinnes <sthinnes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/25 17:38:40 by sventhinnes       #+#    #+#             */
-/*   Updated: 2026/01/25 17:38:40 by sventhinnes      ###   ########.fr       */
+/*   Created: 2026/02/06 18:25:25 by sthinnes          #+#    #+#             */
+/*   Updated: 2026/02/06 18:25:31 by sthinnes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,114 +16,41 @@
 static void	execute_algorithm(t_stack *stack_a, t_stack *stack_b,
 				t_flags *flags, t_benchmark *bench)
 {
-	(void)flags;
-	if (flags->medium)
+	if (flags->complex)
+		turk_sort(stack_a, stack_b, flags, bench);
+	else if (flags->medium)
 		bucket_sort(stack_a, stack_b, flags, bench);
+	else if (flags->adaptive)
+		adaptive_algorithm(stack_a, stack_b, flags, bench);
 	else
-		insertion_sort(stack_a, stack_b, flags, bench);
+		turk_sort(stack_a, stack_b, flags, bench);
 }
 
-static void	run_sorting(t_stack *stack_a, t_stack *stack_b,
-				t_flags *flags, t_benchmark *bench)
+void	run_sorting(t_stack *stack_a, t_stack *stack_b,
+			t_flags *flags, t_benchmark *bench)
 {
-	t_stack			*temp_a;
-	t_benchmark		bench2;
-	int				was_sorted;
+	int	algo_count;
 
-	if (flags->bench && !flags->simple && !flags->medium)
+	algo_count = flags->simple + flags->medium + flags->complex
+		+ flags->adaptive;
+	if (flags->bench && algo_count == 0)
 	{
-		print_stack(stack_a, stack_b);
+		if (!flags->quiet)
+			print_stack(stack_a, stack_b);
 		execute_algorithm(stack_a, stack_b, flags, bench);
 	}
-	else if (flags->simple && flags->medium)
-	{
-		temp_a = create_stack(stack_a->capacity);
-		copy_stack(temp_a, stack_a);
-		print_stack(stack_a, stack_b);
-		if (flags->medium_order < flags->simple_order)
-		{
-			ft_printf("\n=== MEDIUM ===\n\n");
-			make_benchmark(bench, stack_a, flags);
-			bench->strategy_name = "Bucket sort";
-			bench->complexity_class = "O(n√n)";
-			bucket_sort(stack_a, stack_b, flags, bench);
-			ft_printf("\n");
-			print_stack(stack_a, stack_b);
-			benchmark_display(bench);
-			ft_printf("========================\n");
-			copy_stack(stack_a, temp_a);
-			stack_b->size = 0;
-			print_disorder(stack_a->disorder);
-			print_stack(stack_a, stack_b);
-			ft_printf("\n=== SIMPLE ===\n\n");
-			make_benchmark(&bench2, stack_a, flags);
-			bench2.strategy_name = "Insertion sort";
-			bench2.complexity_class = "O(n^2)";
-			insertion_sort(stack_a, stack_b, flags, &bench2);
-			ft_printf("\n");
-			print_stack(stack_a, stack_b);
-			benchmark_display(&bench2);
-		}
-		else
-		{
-			ft_printf("\n=== SIMPLE ===\n\n");
-			make_benchmark(bench, stack_a, flags);
-			bench->strategy_name = "Insertion sort";
-			bench->complexity_class = "O(n^2)";
-			insertion_sort(stack_a, stack_b, flags, bench);
-			ft_printf("\n");
-			print_stack(stack_a, stack_b);
-			benchmark_display(bench);
-			ft_printf("========================\n");
-			copy_stack(stack_a, temp_a);
-			stack_b->size = 0;
-			print_disorder(stack_a->disorder);
-			print_stack(stack_a, stack_b);
-			ft_printf("\n=== MEDIUM ===\n\n");
-			make_benchmark(&bench2, stack_a, flags);
-			bench2.strategy_name = "Bucket sort";
-			bench2.complexity_class = "O(n√n)";
-			bucket_sort(stack_a, stack_b, flags, &bench2);
-			ft_printf("\n");
-			print_stack(stack_a, stack_b);
-			benchmark_display(&bench2);
-		}
-		free_stack(temp_a);
-	}
+	else if (algo_count >= 2)
+		run_multiple_algorithms(stack_a, stack_b, flags, bench);
 	else if (flags->simple)
-	{
-		print_stack(stack_a, stack_b);
-		ft_printf("\n=== SIMPLE ===\n\n");
-		was_sorted = is_sorted(stack_a);
-		insertion_sort(stack_a, stack_b, flags, bench);
-		if (!was_sorted)
-			ft_printf("\n");
-		print_stack(stack_a, stack_b);
-	}
+		run_single_simple(stack_a, stack_b, flags, bench);
 	else if (flags->medium)
-	{
-		print_stack(stack_a, stack_b);
-		ft_printf("\n=== MEDIUM ===\n\n");
-		was_sorted = is_sorted(stack_a);
-		bucket_sort(stack_a, stack_b, flags, bench);
-		if (!was_sorted)
-			ft_printf("\n");
-		print_stack(stack_a, stack_b);
-	}
+		run_single_medium(stack_a, stack_b, flags, bench);
+	else if (flags->complex)
+		run_single_complex(stack_a, stack_b, flags, bench);
+	else if (flags->adaptive)
+		run_single_adaptive(stack_a, stack_b, flags, bench);
 	else
-		ft_printf("Error Flags\n");
-}
-
-static void	setup_and_sort(t_stack *stack_a, t_stack *stack_b,
-				t_flags *flags, t_benchmark *bench)
-{
-	stack_a->disorder = compute_disorder(stack_a->collection, stack_a->size);
-	print_disorder(stack_a->disorder);
-	if (!(flags->simple && flags->medium))
-		make_benchmark(bench, stack_a, flags);
-	run_sorting(stack_a, stack_b, flags, bench);
-	if (!(flags->simple && flags->medium))
-		benchmark_display(bench);
+		turk_sort(stack_a, stack_b, flags, bench);
 }
 
 int	main(int argc, char **argv)

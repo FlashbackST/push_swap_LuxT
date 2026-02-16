@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 #include "benchmark.h"
-//#include <stdio.h>
 
 void	ss(t_stack *stack_a, t_stack *stack_b, t_benchmark *bench)
 {

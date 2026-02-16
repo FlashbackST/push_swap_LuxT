@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sthinnes <sthinnes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/27 16:57:57 by sthinnes          #+#    #+#             */
-/*   Updated: 2026/01/27 16:58:00 by sthinnes         ###   ########.fr       */
+/*   Created: 2026/01/27 17:37:45 by sthinnes          #+#    #+#             */
+/*   Updated: 2026/01/27 17:37:50 by sthinnes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,100 @@
 #include "benchmark.h"
 #include <math.h>
 
-void	push_all_to_b(t_stack *stack_a, t_stack *stack_b,
-				t_flags *flags, t_benchmark *bench)
+static int	get_chunk(int value, int min, int max, int num_chunks)
 {
-	while (stack_a->size > 0)
+	long	range;
+	long	val;
+	long	min_val;
+	int		chunk;
+
+	if (max == min)
+		return (0);
+	range = (long)max - (long)min;
+	val = (long)value;
+	min_val = (long)min;
+	chunk = ((val - min_val) * num_chunks) / (range + 1);
+	if (chunk >= num_chunks)
+		chunk = num_chunks - 1;
+	return (chunk);
+}
+
+static void	push_chunk_to_b(t_stack *stack_a, t_stack *stack_b,
+				t_chunk_ctx *ctx)
+{
+	int	initial_size;
+	int	pushed;
+	int	chunk;
+
+	initial_size = stack_a->size;
+	pushed = 0;
+	while (pushed < initial_size)
 	{
-		pb(stack_a, stack_b, bench);
-		print_verbose(flags, "pb\n");
+		chunk = get_chunk(stack_a->collection[0], ctx->info->min,
+				ctx->info->max, ctx->info->num_buckets);
+		if (chunk <= ctx->target_chunk)
+		{
+			pb(stack_a, stack_b, ctx->bench);
+			if (stack_b->size > 1 && chunk < ctx->target_chunk)
+				rb(stack_b, ctx->bench);
+		}
+		else
+			ra(stack_a, ctx->bench);
+		pushed++;
 	}
 }
 
-int	find_in_bucket(t_stack *stack, int bucket, int min, int range)
+static void	push_back_to_a(t_stack *stack_a, t_stack *stack_b,
+				t_rotate_ctx *ctx)
 {
+	int	max_pos;
 	int	i;
-	int	elem_bucket;
+	int	max_val;
 
-	i = 0;
-	while (i < stack->size)
+	while (stack_b->size > 0)
 	{
-		if (range == 0)
-			elem_bucket = 0;
-		else
+		max_pos = 0;
+		max_val = stack_b->collection[0];
+		i = 1;
+		while (i < stack_b->size)
 		{
-			elem_bucket = (stack->collection[i] - min) / (range / 2 + 1);
-			if (elem_bucket >= 2)
-				elem_bucket = 1;
+			if (stack_b->collection[i] > max_val)
+			{
+				max_val = stack_b->collection[i];
+				max_pos = i;
+			}
+			i++;
 		}
-		if (elem_bucket == bucket)
-			return (i);
-		i++;
+		rotate_to_position_b(stack_b, max_pos, ctx);
+		pa(stack_a, stack_b, ctx->bench);
 	}
-	return (-1);
+}
+
+void	bucket_sort(t_stack *stack_a, t_stack *stack_b,
+			t_flags *flags, t_benchmark *bench)
+{
+	t_bucket_info	info;
+	t_rotate_ctx	ctx;
+	t_chunk_ctx		chunk_ctx;
+
+	ctx.flags = flags;
+	ctx.bench = bench;
+	if (!stack_a || stack_a->size <= 1 || is_sorted(stack_a))
+		return ;
+	info.num_buckets = (int)ceil(sqrt(stack_a->size));
+	if (info.num_buckets < 2)
+		info.num_buckets = 2;
+	if (info.num_buckets > 12)
+		info.num_buckets = 12;
+	info.min = find_min_in_array(stack_a->collection, stack_a->size);
+	info.max = find_max_in_array(stack_a->collection, stack_a->size);
+	chunk_ctx.info = &info;
+	chunk_ctx.bench = bench;
+	chunk_ctx.target_chunk = 0;
+	while (chunk_ctx.target_chunk < info.num_buckets && stack_a->size > 0)
+	{
+		push_chunk_to_b(stack_a, stack_b, &chunk_ctx);
+		chunk_ctx.target_chunk++;
+	}
+	push_back_to_a(stack_a, stack_b, &ctx);
 }

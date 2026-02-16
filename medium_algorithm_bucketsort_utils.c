@@ -23,7 +23,6 @@ void	rotate_to_position_b(t_stack *stack_b, int pos, t_rotate_ctx *ctx)
 		while (pos-- > 0)
 		{
 			rb(stack_b, ctx->bench);
-			print_verbose(ctx->flags, "rb\n");
 		}
 	}
 	else
@@ -32,7 +31,6 @@ void	rotate_to_position_b(t_stack *stack_b, int pos, t_rotate_ctx *ctx)
 		while (rotations-- > 0)
 		{
 			rrb(stack_b, ctx->bench);
-			print_verbose(ctx->flags, "rrb\n");
 		}
 	}
 }
@@ -46,7 +44,6 @@ void	rotate_to_position_a(t_stack *stack_a, int pos, t_rotate_ctx *ctx)
 		while (pos-- > 0)
 		{
 			ra(stack_a, ctx->bench);
-			print_verbose(ctx->flags, "ra\n");
 		}
 	}
 	else
@@ -55,7 +52,6 @@ void	rotate_to_position_a(t_stack *stack_a, int pos, t_rotate_ctx *ctx)
 		while (rotations-- > 0)
 		{
 			rra(stack_a, ctx->bench);
-			print_verbose(ctx->flags, "rra\n");
 		}
 	}
 }

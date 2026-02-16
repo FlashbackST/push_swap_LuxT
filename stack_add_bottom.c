@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-//#include <stdio.h>
 
 void	stack_add_bottom(t_stack *stack, int value)
 {

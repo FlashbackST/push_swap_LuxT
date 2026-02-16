@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-//include <stdio.h>
 
 int	find_max_position(t_stack *stack)
 {

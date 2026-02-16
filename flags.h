@@ -20,11 +20,14 @@ typedef struct s_flags
 {
 	int	simple;
 	int	medium;
-	int	verbose;
-	int	debug;
+	int	complex;
+	int	adaptive;
 	int	bench;
+	int	quiet;
 	int	simple_order;
 	int	medium_order;
+	int	complex_order;
+	int	adaptive_order;
 }	t_flags;
 
 void	init_flags(t_flags *flags);

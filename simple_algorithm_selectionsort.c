@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 #include "benchmark.h"
-//include <stdio.h>
 
 void	selection_sort(t_stack *stack_a, t_stack *stack_b, t_flags *flags,
 				t_benchmark *bench)
@@ -26,11 +25,9 @@ void	selection_sort(t_stack *stack_a, t_stack *stack_b, t_flags *flags,
 		min_pos = find_min_position(stack_a);
 		rotate_to_min(stack_a, min_pos, flags, bench);
 		pb(stack_a, stack_b, bench);
-		print_verbose(flags, "pb\n");
 	}
 	while (stack_b->size > 0)
 	{
 		pa(stack_a, stack_b, bench);
-		print_verbose(flags, "pa\n");
 	}
 }

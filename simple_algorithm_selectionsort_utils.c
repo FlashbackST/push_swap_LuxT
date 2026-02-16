@@ -12,13 +12,6 @@
 
 #include "push_swap.h"
 #include "benchmark.h"
-//include <stdio.h>
-
-void	print_verbose(t_flags *flags, char *msg)
-{
-	if (flags && flags->verbose)
-		ft_printf("%s", msg);
-}
 
 int	find_min_position(t_stack *stack)
 {
@@ -49,22 +42,17 @@ void	rotate_to_min(t_stack *stack_a, int min_pos, t_flags *flags,
 	int	min_value;
 	int	size;
 
+	(void)flags;
 	min_value = stack_a->collection[min_pos];
 	size = stack_a->size;
 	if (min_pos <= size / 2)
 	{
 		while (stack_a->collection[0] != min_value)
-		{
 			ra(stack_a, bench);
-			print_verbose(flags, "ra\n");
-		}
 	}
 	else
 	{
 		while (stack_a->collection[0] != min_value)
-		{
 			rra(stack_a, bench);
-			print_verbose(flags, "rra\n");
-		}
 	}
 }

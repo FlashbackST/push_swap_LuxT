@@ -33,12 +33,17 @@ void	init_flags(t_flags *flags)
 		return ;
 	flags->simple = 0;
 	flags->medium = 0;
+	flags->complex = 0;
+	flags->adaptive = 0;
 	flags->bench = 0;
+	flags->quiet = 0;
 	flags->simple_order = 0;
 	flags->medium_order = 0;
+	flags->complex_order = 0;
+	flags->adaptive_order = 0;
 }
 
-static void	process_flag(char *arg, t_flags *flags, int *order)
+static void	set_algo_flag(char *arg, t_flags *flags, int *order)
 {
 	if (ft_strcmp(arg, "--simple") == 0)
 	{
@@ -50,9 +55,27 @@ static void	process_flag(char *arg, t_flags *flags, int *order)
 		flags->medium = 1;
 		flags->medium_order = (*order)++;
 	}
-	else if (ft_strcmp(arg, "--bench") == 0)
+	else if (ft_strcmp(arg, "--complex") == 0)
+	{
+		flags->complex = 1;
+		flags->complex_order = (*order)++;
+	}
+	else if (ft_strcmp(arg, "--adaptive") == 0)
+	{
+		flags->adaptive = 1;
+		flags->adaptive_order = (*order)++;
+	}
+}
+
+static void	process_flag(char *arg, t_flags *flags, int *order)
+{
+	set_algo_flag(arg, flags, order);
+	if (ft_strcmp(arg, "--bench") == 0)
 		flags->bench = 1;
-	else
+	else if (ft_strcmp(arg, "--quiet") == 0)
+		flags->quiet = 1;
+	else if (!flags->simple && !flags->medium
+		&& !flags->complex && !flags->adaptive)
 	{
 		write(2, "Error\n", 6);
 		exit(1);

@@ -1,40 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   disorder_metric.c                                  :+:      :+:    :+:   */
+/*   get_next_line_utils_for_push_swap_bonus.c          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sthinnes <sthinnes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/26 21:02:19 by sthinnes          #+#    #+#             */
-/*   Updated: 2026/01/26 21:02:30 by sthinnes         ###   ########.fr       */
+/*   Created: 2026/02/14 02:16:56 by sthinnes          #+#    #+#             */
+/*   Updated: 2026/02/14 02:17:00 by sthinnes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker_bonus.h"
 
-double	compute_disorder(int *stack, int size)
+char	*ft_strchr(const char *s, int c)
 {
-	int	mistakes;
-	int	total_pairs;
-	int	i;
-	int	j;
-
-	mistakes = 0;
-	total_pairs = 0;
-	i = 0;
-	while (i < size - 1)
+	if (!s)
+		return (NULL);
+	while (*s)
 	{
-		j = i + 1;
-		while (j < size)
-		{
-			total_pairs++;
-			if (stack[i] > stack[j])
-				mistakes++;
-			j++;
-		}
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*dup;
+	int		i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	dup = malloc(i + 1);
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		dup[i] = s[i];
 		i++;
 	}
-	if (total_pairs == 0)
-		return (0.0);
-	return ((double)mistakes / (double)total_pairs);
+	dup[i] = '\0';
+	return (dup);
 }

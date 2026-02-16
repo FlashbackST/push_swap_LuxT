@@ -19,7 +19,6 @@ static void	do_rr_operations(t_stack *stack_a, t_stack *stack_b,
 	while (pos->pos_a > 0 && pos->pos_b > 0)
 	{
 		rr(stack_a, stack_b, ctx->bench);
-		print_verbose(ctx->flags, "rr\n");
 		pos->pos_a--;
 		pos->pos_b--;
 	}
@@ -36,7 +35,6 @@ static void	do_rrr_operations(t_stack *stack_a, t_stack *stack_b,
 	while (pos->pos_a < size_a && pos->pos_b < size_b)
 	{
 		rrr(stack_a, stack_b, ctx->bench);
-		print_verbose(ctx->flags, "rrr\n");
 		pos->pos_a++;
 		pos->pos_b++;
 	}
